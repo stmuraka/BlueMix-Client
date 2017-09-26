@@ -4,17 +4,7 @@
 # Display availabe plugins
 bluemix plugin repo-plugins
 
-plugins=( $(bluemix plugin repo-plugins | awk '{print $1}') )
-
-# Trim plugin list
-for p in "${plugins[@]}"; do
-    if [ "${p}" == "Name" ]; then
-        plugins=("${plugins[@]:1}")
-        break
-    else
-        plugins=("${plugins[@]:1}")
-    fi
-done
+plugins=( $(bluemix plugin repo-plugins | grep 'Not Installed' | awk '{print $3}') )
 
 # Install plugin list
 for plugin in "${plugins[@]}"; do
