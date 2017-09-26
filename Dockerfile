@@ -4,6 +4,7 @@ RUN apt-get update \
  && apt-get -y install \
     ca-certificates \
     curl \
+    bash-completion \
  && apt-get autoremove \
  && apt-get autoclean
 
@@ -51,6 +52,12 @@ ENV BM_ENV="" \
     BM_USER="" \
     BM_ORG="" \
     BM_SPACE=""
+
+# Enable bash completion
+RUN echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then" >> ~/.bashrc \
+ && echo "    . /etc/bash_completion" >> ~/.bashrc \
+ && echo "fi" >> ~/.bashrc \
+ && echo "" >> ~/.bashrc
 
 # Copy login script
 COPY login.sh /root/
